@@ -9,15 +9,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class SaleEntity extends Sale {
+public class SaleDetailEntity extends SaleDetail {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@JoinColumn(name = "table_id")
+	@JoinColumn(name = "sale_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	private SaleEntity sale;
+
+	@JoinColumn(name = "product_id")
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	private TableEntity table;
+	private ProductEntity product;
 
 	public Long getId() {
 		return id;
@@ -27,12 +31,20 @@ public class SaleEntity extends Sale {
 		this.id = id;
 	}
 
-	public TableEntity getTable() {
-		return table;
+	public SaleEntity getSale() {
+		return sale;
 	}
 
-	public void setTable(TableEntity table) {
-		this.table = table;
+	public void setSale(SaleEntity sale) {
+		this.sale = sale;
+	}
+
+	public ProductEntity getProduct() {
+		return product;
+	}
+
+	public void setProduct(ProductEntity product) {
+		this.product = product;
 	}
 
 }
