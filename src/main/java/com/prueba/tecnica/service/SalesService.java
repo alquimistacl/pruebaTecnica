@@ -54,7 +54,7 @@ public class SalesService {
 		List<SaleEntity> salesByDate = saleRepository.findByDate(saleDate);
 
 		if (salesByDate.isEmpty()) {
-			logger.error("Date not found");
+			logger.error("Date {} not found", saleDate);
 			// generates exception
 		}
 

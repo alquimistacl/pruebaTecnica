@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@javax.persistence.Table(name = "board")
 @Entity
 public class TableEntity extends Table {
 

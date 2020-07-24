@@ -7,7 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Table(name = "sale")
 @Entity
 public class SaleEntity extends Sale {
 
@@ -15,7 +17,7 @@ public class SaleEntity extends Sale {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@JoinColumn(name = "table_id")
+	@JoinColumn(name = "board_id")
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	private TableEntity table;
 

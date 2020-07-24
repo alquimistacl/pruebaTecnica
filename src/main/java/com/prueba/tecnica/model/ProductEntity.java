@@ -7,9 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Table(name = "product")
 @Entity
-public class ProductEntity {
+public class ProductEntity extends Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
