@@ -6,12 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.prueba.tecnica.model.Sale;
+import com.prueba.tecnica.dto.SaleDto;
 import com.prueba.tecnica.model.SaleEntity;
 import com.prueba.tecnica.service.SalesService;
 
@@ -24,9 +24,9 @@ public class SaleController {
 	private SalesService service;
 
 	@ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")
-	@PostMapping("/sales/table/{tableId}")
-	public ResponseEntity<String> addSale(Sale sale, @PathVariable Long tableId) {
-		service.registerSale(sale, tableId);
+	@PostMapping("/sales")
+	public ResponseEntity<String> addSale(@RequestBody SaleDto saleDto) {
+		service.registerSale(saleDto);
 		return ResponseEntity.ok("Venta registrada");
 	}
 

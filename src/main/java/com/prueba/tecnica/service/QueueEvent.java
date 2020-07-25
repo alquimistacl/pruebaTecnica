@@ -13,4 +13,8 @@ public class QueueEvent {
 		logger.info(message);
 	}
 
+	public String getMessage() {
+		return message;
+	}
+
 }

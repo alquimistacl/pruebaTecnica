@@ -3,12 +3,12 @@ package com.prueba.tecnica.service;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import com.prueba.tecnica.model.SaleMessage;
+import com.prueba.tecnica.dto.SaleDto;
 
 public class MockQueue {
 
 	private static MockQueue mockQueue = new MockQueue();
-	private static Queue<SaleMessage> queue = new LinkedList<>();
+	private static Queue<SaleDto> queue = new LinkedList<>();
 
 	private MockQueue() {
 		// required constructor
@@ -18,11 +18,11 @@ public class MockQueue {
 		return mockQueue;
 	}
 
-	protected static Boolean putMessage(SaleMessage messasge) {
+	protected static Boolean putMessage(SaleDto messasge) {
 		return queue.add(messasge);
 	}
 
-	protected static SaleMessage getMessage() {
+	protected static SaleDto getMessage() {
 		return queue.poll();
 	}
 
