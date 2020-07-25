@@ -26,8 +26,8 @@ public class SaleController {
 	@ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")
 	@PostMapping("/sales/table/{tableId}")
 	public ResponseEntity<String> addSale(Sale sale, @PathVariable Long tableId) {
-		Long registerSale = service.registerSale(sale, tableId);
-		return ResponseEntity.ok("Venta id " + registerSale + " registrada");
+		service.registerSale(sale, tableId);
+		return ResponseEntity.ok("Venta registrada");
 	}
 
 	@ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")
