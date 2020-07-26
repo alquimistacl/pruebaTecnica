@@ -11,21 +11,25 @@ Para esta implementacion, se utilizo:
 * H2 db
 * swagger
 
-### Detalles de compilaci�n y ejecuci�n ###
+### Detalles de compilacion y ejecucion ###
 
 Para compilar esta aplicacion, es necesario ejecutar en el directorio raiz de la misma, la
 siguiente instruccion:
+
 ```.\mvnw.cmd clean compile package```
 
 Para ejecutar la aplicacion, es necesario ejecutar en el directorio raiz de la misma, la siguiente instruccion:
+
 ```.\mvnw.cmd spring-boot:run```
 
 Para ejecutar las pruebas, es necesario ejecutar la siguiente instruccion:
+
 ```.\mvnw.cmd test```
 
 ### Credenciales ###
 
 Credenciales para generar un json web token(jwt), con el que se podrá acceder al resto de los endpoints
+
 ```
 {
   "name": "usuario",
