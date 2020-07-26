@@ -3,6 +3,11 @@ package com.prueba.tecnica.service;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Event to record when the {@link MockQueue} is called
+ * @author Luis San Martin
+ *
+ */
 public class QueueEvent {
 	private final String message;
 

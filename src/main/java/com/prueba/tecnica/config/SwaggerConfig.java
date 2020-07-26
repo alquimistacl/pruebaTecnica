@@ -10,7 +10,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * Basic configuration for the swagger library
- * @author developer
+ * @author Luis San Martin
  *
  */
 @Configuration

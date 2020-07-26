@@ -1,6 +1,7 @@
 package com.prueba.tecnica.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import com.prueba.tecnica.dto.SaleDetailDto;
 import com.prueba.tecnica.dto.SaleDto;
+import com.prueba.tecnica.exception.DateNotFoundException;
+import com.prueba.tecnica.exception.TableNotFoundException;
 import com.prueba.tecnica.model.ProductEntity;
 import com.prueba.tecnica.model.SaleDetailEntity;
 import com.prueba.tecnica.model.SaleEntity;
@@ -23,6 +26,12 @@ import com.prueba.tecnica.repository.SaleDetailRepository;
 import com.prueba.tecnica.repository.SaleRepository;
 import com.prueba.tecnica.repository.TableRepository;
 
+/**
+ * Allows to handle the sale operations
+ * 
+ * @author Luis San Martin
+ *
+ */
 @Service
 public class SalesService {
 
@@ -45,12 +54,13 @@ public class SalesService {
 	@Autowired
 	private ApplicationEventPublisher publisher;
 
+	/**
+	 * Register a sale in the MockQueue
+	 * 
+	 * @param saleDto
+	 * @return
+	 */
 	public Boolean registerSale(SaleDto saleDto) {
-//
-//		SaleMessage message = new SaleMessage();
-//		message.setSale(sale);
-//		message.setTableId(tableId);
-
 		Boolean response = MockQueue.putMessage(saleDto);
 
 		QueueEvent queueEvent = new QueueEvent(QUEUE_REGISTERED);
@@ -59,6 +69,11 @@ public class SalesService {
 		return response;
 	}
 
+	/**
+	 * Listens when a new Queue event is triggered
+	 * 
+	 * @param event
+	 */
 	@EventListener
 	public void registerSaleDB(QueueEvent event) {
 
@@ -66,24 +81,26 @@ public class SalesService {
 
 		SaleEntity saleEntity = new SaleEntity();
 
-		Optional<TableEntity> tableEntityOptional = tableRepository.findById(saleDto.getTableId());
+		Long tableId = saleDto.getTableId();
+		Optional<TableEntity> tableEntityOptional = tableRepository.findById(tableId);
 		if (tableEntityOptional.isPresent()) {
 			saleEntity.setTable(tableEntityOptional.get());
 		} else {
-			logger.error("Table not found");
-			return;
-			// generates exception
+			logger.error("Board id {} not found", tableId);
+			throw new TableNotFoundException("El id de la mesa " + tableId + " no fue encontrado");
 		}
 
-		saleEntity.setDate(saleDto.getDate());
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(saleDto.getDate());
+		cal.set(Calendar.HOUR_OF_DAY, cal.getActualMinimum(Calendar.HOUR_OF_DAY));
+		cal.set(Calendar.MINUTE, cal.getActualMinimum(Calendar.MINUTE));
+		cal.set(Calendar.SECOND, cal.getActualMinimum(Calendar.SECOND));
+		cal.set(Calendar.MILLISECOND, cal.getActualMinimum(Calendar.MILLISECOND));
+
+		saleEntity.setDate(cal.getTime());
+
 		saleEntity.setTotalAmount(saleDto.getTotalAmount());
 		SaleEntity savedSale = saleRepository.save(saleEntity);
-
-		if (null == savedSale.getId()) {
-			logger.error("There was a problem saving table data");
-			return;
-			// generates exception
-		}
 
 		List<SaleDetailDto> saleDetailList = saleDto.getSaleDetail();
 
@@ -111,12 +128,18 @@ public class SalesService {
 		logger.info("Sale registered in the database");
 	}
 
+	/**
+	 * Get the sales by date
+	 * 
+	 * @param saleDate
+	 * @return
+	 */
 	public List<SaleEntity> listSalesByDay(Date saleDate) {
 		List<SaleEntity> salesByDate = saleRepository.findByDate(saleDate);
 
 		if (salesByDate.isEmpty()) {
 			logger.error("Date {} not found", saleDate);
-			// generates exception
+			throw new DateNotFoundException("No hay datos para la fecha " + saleDate + " ingresada");
 		}
 
 		return salesByDate;

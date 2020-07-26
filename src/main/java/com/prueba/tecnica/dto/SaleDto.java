@@ -3,6 +3,11 @@ package com.prueba.tecnica.dto;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Allows to input new sales
+ * @author Luis San Martin
+ *
+ */
 public class SaleDto {
 
 	private Date date;

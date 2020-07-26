@@ -9,6 +9,11 @@ import org.springframework.stereotype.Service;
 import com.prueba.tecnica.model.AppUser;
 import com.prueba.tecnica.util.JwtTokenUtil;
 
+/**
+ * Allows to handle jwt operations
+ * @author Luis San Martin
+ *
+ */
 @Service
 public class JwtTokenService {
 

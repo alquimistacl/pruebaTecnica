@@ -5,6 +5,11 @@ import java.util.Queue;
 
 import com.prueba.tecnica.dto.SaleDto;
 
+/**
+ * Mock queue to store the sale information
+ * @author Luis San Martin
+ *
+ */
 public class MockQueue {
 
 	private static MockQueue mockQueue = new MockQueue();

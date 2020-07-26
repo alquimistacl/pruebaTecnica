@@ -11,6 +11,11 @@ import org.springframework.stereotype.Service;
 import com.prueba.tecnica.model.AppUser;
 import com.prueba.tecnica.repository.AppUserRepository;
 
+/**
+ * Allows to handle jwt user details
+ * @author Luis San Martin
+ *
+ */
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 

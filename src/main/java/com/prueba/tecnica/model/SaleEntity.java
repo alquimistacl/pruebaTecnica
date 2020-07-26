@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Table(name = "sale")
 @Entity
 public class SaleEntity extends Sale {
@@ -19,6 +21,7 @@ public class SaleEntity extends Sale {
 
 	@JoinColumn(name = "board_id")
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private TableEntity table;
 
 	public Long getId() {

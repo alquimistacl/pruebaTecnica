@@ -1,5 +1,10 @@
 package com.prueba.tecnica.dto;
 
+/**
+ * Allows to input new detail sales
+ * @author Luis San Martin
+ *
+ */
 public class SaleDetailDto {
 	private Integer quantity;
 	private Integer amount;

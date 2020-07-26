@@ -1,5 +1,7 @@
 package com.prueba.tecnica.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,7 +14,7 @@ import com.prueba.tecnica.model.AppUser;
 import com.prueba.tecnica.service.JwtTokenService;
 
 /**
- * Helper controller to get the token and expose the swagger documentation
+ * Helper controller to get the token and expose the swagger documentation and the login
  * 
  * @author Luis San Martin
  *
@@ -30,7 +32,7 @@ public class RootController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<String> processLogin(@RequestBody AppUser appUser) {
+	public ResponseEntity<String> processLogin(@Valid @RequestBody AppUser appUser) {
 		return ResponseEntity.ok(service.getJwtToken(appUser));
 	}
 }
