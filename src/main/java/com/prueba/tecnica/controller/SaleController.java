@@ -18,6 +18,7 @@ import com.prueba.tecnica.model.SaleEntity;
 import com.prueba.tecnica.service.SalesService;
 
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
@@ -47,7 +48,8 @@ public class SaleController {
 
 	@ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")
 	@GetMapping(path = "/sales", params = { "saleDate" }, produces = { "application/json" })
-	public ResponseEntity<List<SaleEntity>> getSales(@Valid @RequestParam("saleDate") Date saleDate) {
+	public ResponseEntity<List<SaleEntity>> getSales(
+			@ApiParam(value = "Fecha para obtener las ventas, formato yyyy/MM/dd") @Valid @RequestParam("saleDate") Date saleDate) {
 		List<SaleEntity> salesByDay = service.listSalesByDay(saleDate);
 		return ResponseEntity.ok(salesByDay);
 	}
