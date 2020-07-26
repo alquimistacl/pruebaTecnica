@@ -1,7 +1,6 @@
 package com.prueba.tecnica.service;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -77,7 +76,7 @@ public class SalesService {
 	@EventListener
 	public void registerSaleDB(QueueEvent event) {
 
-		SaleDto saleDto = MockQueue.getMessage();
+		SaleDto saleDto = getMessage();
 
 		SaleEntity saleEntity = new SaleEntity();
 
@@ -90,14 +89,9 @@ public class SalesService {
 			throw new TableNotFoundException("El id de la mesa " + tableId + " no fue encontrado");
 		}
 
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(saleDto.getDate());
-		cal.set(Calendar.HOUR_OF_DAY, cal.getActualMinimum(Calendar.HOUR_OF_DAY));
-		cal.set(Calendar.MINUTE, cal.getActualMinimum(Calendar.MINUTE));
-		cal.set(Calendar.SECOND, cal.getActualMinimum(Calendar.SECOND));
-		cal.set(Calendar.MILLISECOND, cal.getActualMinimum(Calendar.MILLISECOND));
-
-		saleEntity.setDate(cal.getTime());
+		Date date = saleDto.getDate();
+		logger.info(date);
+		saleEntity.setDate(date);
 
 		saleEntity.setTotalAmount(saleDto.getTotalAmount());
 		SaleEntity savedSale = saleRepository.save(saleEntity);
@@ -126,6 +120,10 @@ public class SalesService {
 
 		saleDetailRepository.saveAll(detailEntityList);
 		logger.info("Sale registered in the database");
+	}
+
+	protected SaleDto getMessage() {
+		return MockQueue.getMessage();
 	}
 
 	/**

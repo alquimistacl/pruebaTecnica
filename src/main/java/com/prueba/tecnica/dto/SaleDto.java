@@ -3,6 +3,8 @@ package com.prueba.tecnica.dto;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * Allows to input new sales
  * @author Luis San Martin
@@ -10,6 +12,7 @@ import java.util.List;
  */
 public class SaleDto {
 
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date date;
 	private Integer totalAmount;
 	private Long tableId;
